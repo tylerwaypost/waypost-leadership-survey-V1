@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Waypost Leadership Survey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand-green: #00a750;
+      --brand-green-dark: #008c44;
+      --brand-cream: #fff2d6;
+      --brand-cream-bg: #f5e6c8;
+      --text-black: #000000;
+      --text-gray: #6F6F6F;
+      --bg-main: #fafaf9;
+      --border-light: #e7e5e4;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-black);
+      line-height: 1.5;
+    }
+
+    .header {
+      background: white;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .header-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .logo img { width: 100%; height: 100%; object-fit: cover; }
+
+    .header-title { font-weight: 700; font-size: 20px; }
+
+    .tab-nav {
+      background: white;
+      border-bottom: 1px solid var(--border-light);
+      padding: 0 24px;
+    }
+
+    .tab-nav-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      padding: 16px 20px;
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-gray);
+      cursor: pointer;
+      white-space: nowrap;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover { color: var(--brand-green); }
+    .tab-btn.active { color: var(--brand-green); border-bottom-color: var(--brand-green); }
+
+    .main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 24px 140px;
+    }
+
+    .section { display: none; }
+    .section.active { display: block; }
+
+    .section-header { margin-bottom: 36px; text-align: center; }
+    .section-title { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+    .section-desc { font-size: 16px; color: var(--text-gray); }
+
+    .form-group { margin-bottom: 32px; }
+    .form-label { display: block; font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+    .form-hint { font-size: 14px; color: var(--text-gray); margin-bottom: 12px; }
+
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid var(--border-light);
+      border-radius: 8px;
+      font-size: 16px;
+      font-family: inherit;
+      background: white;
+      transition: all 0.2s;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--brand-green);
+      background: var(--brand-cream);
+    }
+
+    textarea { min-height: 120px; resize: vertical; }
+
+    select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236F6F6F' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+      background-position: right 12px center;
+      background-repeat: no-repeat;
+      background-size: 20px;
+      padding-right: 44px;
+    }
+
+    .slider-container { padding: 16px 0; }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 8px;
+      background: var(--brand-green);
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 0;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 24px;
+      height: 24px;
+      background: var(--brand-cream);
+      border: 3px solid var(--brand-green);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 24px;
+      height: 24px;
+      background: var(--brand-cream);
+      border: 3px solid var(--brand-green);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .slider-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      color: var(--brand-green);
+      font-weight: 500;
+      margin-top: 12px;
+    }
+
+    .radio-group { display: flex; flex-direction: column; gap: 10px; }
+
+    .radio-option {
+      padding: 14px 16px;
+      border: 2px solid var(--border-light);
+      border-radius: 8px;
+      cursor: pointer;
+      background: white;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transition: all 0.2s;
+    }
+
+    .radio-option:hover { border-color: #ccc; }
+    .radio-option.selected { border-color: var(--brand-green); background: #f0fdf4; }
+
+    .radio-circle {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid #ccc;
+      flex-shrink: 0;
+      margin-top: 2px;
+      transition: all 0.2s;
+    }
+
+    .radio-option.selected .radio-circle { border: 6px solid var(--brand-green); }
+
+    .radio-content { flex: 1; }
+    .radio-label { font-weight: 600; }
+    .radio-desc { font-size: 14px; color: var(--text-gray); margin-top: 2px; }
+
+    .pill-group { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .pill {
+      padding: 10px 18px;
+      border: 2px solid var(--border-light);
+      border-radius: 24px;
+      background: white;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-gray);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .pill:hover { border-color: #ccc; }
+    .pill.selected { border-color: var(--brand-green); background: var(--brand-cream); color: var(--brand-green); }
+
+    .btn {
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary { background: var(--brand-green); color: white; border: none; }
+    .btn-primary:hover { background: var(--brand-green-dark); }
+    .btn-ghost { background: white; color: var(--text-gray); border: 2px solid var(--border-light); }
+    .btn-ghost:hover { border-color: #ccc; }
+
+    .footer-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 1px solid var(--border-light);
+      padding: 16px 24px;
+    }
+
+    .footer-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .auto-save { text-align: center; font-size: 13px; color: var(--text-gray); margin-top: 8px; }
+
+    .welcome-box {
+      background: var(--brand-cream);
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .welcome-box h1 { font-size: 36px; margin-bottom: 16px; }
+    .welcome-box p { font-size: 16px; color: var(--text-gray); line-height: 1.7; margin-bottom: 12px; }
+    .welcome-time { font-size: 14px; color: var(--text-gray); font-style: italic; }
+
+    .complete-box { text-align: center; padding: 60px 24px; }
+
+    .complete-icon {
+      width: 80px;
+      height: 80px;
+      background: var(--brand-green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+
+    .complete-icon svg { width: 40px; height: 40px; stroke: white; stroke-width: 3; fill: none; }
+    .complete-title { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
+    .complete-desc { font-size: 16px; color: var(--text-gray); }
+
+    .leadership-badge {
+      display: inline-block;
+      background: var(--brand-cream);
+      color: var(--brand-green);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 600px) {
+      .main { padding: 24px 16px 140px; }
+      .section-title { font-size: 26px; }
+      .tab-btn { padding: 14px 16px; font-size: 14px; }
+      .welcome-box { padding: 28px 20px; }
+      .welcome-box h1 { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <img src="data:image/webp;base64,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" alt="Waypost">
+      </div>
+      <div class="header-title">Waypost Leadership Survey</div>
+    </div>
+  </header>
+
+  <nav class="tab-nav">
+    <div class="tab-nav-inner">
+      <button class="tab-btn active" onclick="goToSection(0)">Welcome</button>
+      <button class="tab-btn" onclick="goToSection(1)">Your Capacity</button>
+      <button class="tab-btn" onclick="goToSection(2)">Process Efficiency</button>
+      <button class="tab-btn" onclick="goToSection(3)">Energy & Drains</button>
+      <button class="tab-btn" onclick="goToSection(4)">Forward</button>
+      <button class="tab-btn" onclick="goToSection(5)">Closing</button>
+    </div>
+  </nav>
+
+  <main class="main">
+
+    <!-- Welcome -->
+    <div class="section active" id="section-0">
+      <div class="welcome-box">
+        <span class="leadership-badge">LEADERSHIP</span>
+        <h1>Leadership Reflection</h1>
+        <p>This assessment captures your perspective as a leader — your capacity, where you see the team spending time, and your vision for Waypost's future.</p>
+        <p>Your insights help shape organizational strategy and support the staff development process.</p>
+        <p class="welcome-time">Estimated time: 15-20 minutes</p>
+      </div>
+    </div>
+
+    <!-- Your Capacity -->
+    <div class="section" id="section-1">
+      <div class="section-header">
+        <h2 class="section-title">Your Capacity</h2>
+        <p class="section-desc">Quick pulse on where you're at</p>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">How stretched are you right now?</label>
+        <div class="slider-container">
+          <input type="range" min="1" max="10" value="5">
+          <div class="slider-labels">
+            <span>Manageable</span>
+            <span>At capacity</span>
+            <span>Stretched</span>
+            <span>Drowning</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">How many "hats" are you currently wearing?</label>
+        <p class="form-hint">Count anything that feels like a separate job — official or not</p>
+        <input type="text" placeholder="#">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">What percentage of your time is strategic vs. tactical?</label>
+        <div class="slider-container">
+          <input type="range" min="0" max="100" value="50">
+          <div class="slider-labels">
+            <span>All Tactical</span>
+            <span>Balanced</span>
+            <span>All Strategic</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">At your current pace, how long can you sustain this?</label>
+        <select>
+          <option value="">Select timeframe...</option>
+          <option>A few more weeks</option>
+          <option>A few more months</option>
+          <option>6-12 months</option>
+          <option>Indefinitely — I'm okay</option>
+          <option>Already past my limit</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Anything else about your capacity?</label>
+        <textarea placeholder="Optional — share any context..."></textarea>
+      </div>
+    </div>
+
+    <!-- Process Efficiency (NEW) -->
+    <div class="section" id="section-2">
+      <div class="section-header">
+        <h2 class="section-title">Process Efficiency</h2>
+        <p class="section-desc">Your observations from a leadership vantage point</p>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Where do you think the team is spending time on processes that could be streamlined or systematized?</label>
+        <p class="form-hint">Think about what you've observed — repeated bottlenecks, manual workarounds, tasks that seem harder than they should be.</p>
+        <textarea placeholder="Share your observations..." style="min-height: 180px;"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">What strategic work are you NOT doing that you should be?</label>
+        <p class="form-hint">Things that keep getting pushed because of day-to-day demands.</p>
+        <textarea placeholder="The strategic priorities that keep slipping..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">What does the team need from you that they're not getting?</label>
+        <textarea placeholder="Support, clarity, resources, time..."></textarea>
+      </div>
+    </div>
+
+    <!-- Energy & Drains -->
+    <div class="section" id="section-3">
+      <div class="section-header">
+        <h2 class="section-title">Energy & Drains</h2>
+        <p class="section-desc">Understanding what energizes and drains you</p>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">What leadership work gives you energy?</label>
+        <textarea placeholder="The parts of leadership that energize you..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">What percentage of your current work energizes you?</label>
+        <div class="slider-container">
+          <input type="range" min="0" max="100" value="50">
+          <div class="slider-labels">
+            <span>0%</span>
+            <span>50%</span>
+            <span>100%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">What 2-3 things drain your energy the most?</label>
+        <textarea placeholder="The things that leave you depleted..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">What's at the root of these drains?</label>
+        <div class="pill-group">
+          <button class="pill" onclick="togglePill(this)">Too much volume</button>
+          <button class="pill" onclick="togglePill(this)">Wrong fit for skills</button>
+          <button class="pill" onclick="togglePill(this)">Lack of clarity</button>
+          <button class="pill" onclick="togglePill(this)">Inefficient process</button>
+          <button class="pill" onclick="togglePill(this)">Emotional weight</button>
+          <button class="pill" onclick="togglePill(this)">Lack of support</button>
+          <button class="pill" onclick="togglePill(this)">Constant interruptions</button>
+          <button class="pill" onclick="togglePill(this)">Board/external demands</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">If you could change ONE thing tomorrow, what would it be?</label>
+        <input type="text" placeholder="The single biggest change...">
+      </div>
+    </div>
+
+    <!-- Forward -->
+    <div class="section" id="section-4">
+      <div class="section-header">
+        <h2 class="section-title">Looking Forward</h2>
+        <p class="section-desc">Your vision for Waypost's future</p>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">What's your vision for how Waypost should evolve over the next 1-2 years?</label>
+        <textarea placeholder="The direction you see the organization heading..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">What does the team need to grow into to support that vision?</label>
+        <textarea placeholder="Skills, capacity, structure, culture..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">What support would help you lead through this transition?</label>
+        <textarea placeholder="Resources, development, support systems..."></textarea>
+      </div>
+    </div>
+
+    <!-- Closing -->
+    <div class="section" id="section-5">
+      <div class="section-header">
+        <h2 class="section-title">Closing</h2>
+        <p class="section-desc">Final thoughts</p>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">What's the ONE thing you most want to communicate about your current situation?</label>
+        <textarea placeholder="The most important thing..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Any other ideas for how Waypost could work smarter?</label>
+        <textarea placeholder="Ideas, observations, suggestions..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Anything else?</label>
+        <textarea placeholder="Optional..."></textarea>
+      </div>
+    </div>
+
+    <!-- Complete -->
+    <div class="section" id="section-6">
+      <div class="complete-box">
+        <div class="complete-icon">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <h2 class="complete-title">Thank You</h2>
+        <p class="complete-desc">Your leadership reflection has been submitted. This input will help shape organizational strategy and the staff development process.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer-nav">
+    <div class="footer-inner">
+      <button class="btn btn-ghost" id="backBtn" onclick="prevSection()">Back</button>
+      <button class="btn btn-primary" id="nextBtn" onclick="nextSection()">Continue</button>
+    </div>
+    <div class="auto-save">Auto-saved</div>
+  </footer>
+
+  <script>
+    const STORAGE_KEY = 'waypost-leadership-survey';
+    let currentSection = 0;
+    const totalSections = 7;
+
+    // Load saved progress on page load
+    function loadProgress() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          const data = JSON.parse(saved);
+          currentSection = data.currentSection || 0;
+          
+          // Restore form values
+          if (data.formData) {
+            Object.keys(data.formData).forEach(key => {
+              const el = document.querySelector(`[data-field="${key}"]`);
+              if (el) {
+                if (el.type === 'range') {
+                  el.value = data.formData[key];
+                } else if (el.tagName === 'TEXTAREA' || el.tagName === 'INPUT') {
+                  el.value = data.formData[key];
+                } else if (el.tagName === 'SELECT') {
+                  el.value = data.formData[key];
+                }
+              }
+            });
+            
+            // Restore radio selections
+            if (data.radioSelections) {
+              data.radioSelections.forEach(selector => {
+                const el = document.querySelector(selector);
+                if (el) el.classList.add('selected');
+              });
+            }
+            
+            // Restore pill selections
+            if (data.pillSelections) {
+              data.pillSelections.forEach(selector => {
+                const el = document.querySelector(selector);
+                if (el) el.classList.add('selected');
+              });
+            }
+          }
+          
+          if (currentSection > 0) {
+            showResumePrompt(data.savedAt);
+          }
+        } catch (e) {
+          console.error('Error loading progress:', e);
+        }
+      }
+    }
+
+    function showResumePrompt(savedAt) {
+      const date = savedAt ? new Date(savedAt).toLocaleDateString() : 'earlier';
+      if (confirm(`Welcome back! You have saved progress from ${date}. Continue where you left off?`)) {
+        updateUI();
+      } else {
+        currentSection = 0;
+        localStorage.removeItem(STORAGE_KEY);
+        updateUI();
+      }
+    }
+
+    // Save progress
+    function saveProgress() {
+      const formData = {};
+      document.querySelectorAll('[data-field]').forEach(el => {
+        formData[el.dataset.field] = el.value;
+      });
+      
+      const radioSelections = [];
+      document.querySelectorAll('.radio-option.selected').forEach((el, i) => {
+        const parent = el.closest('.radio-group');
+        const index = Array.from(parent.children).indexOf(el);
+        radioSelections.push(`.radio-group:nth-of-type(${i + 1}) .radio-option:nth-child(${index + 1})`);
+      });
+      
+      const pillSelections = [];
+      document.querySelectorAll('.pill.selected').forEach(el => {
+        pillSelections.push(`[data-pill="${el.dataset.pill}"]`);
+      });
+      
+      const data = {
+        currentSection,
+        formData,
+        radioSelections,
+        pillSelections,
+        savedAt: new Date().toISOString()
+      };
+      
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      updateAutoSaveText();
+    }
+
+    function updateAutoSaveText() {
+      const el = document.querySelector('.auto-save');
+      if (el) {
+        const now = new Date();
+        el.textContent = `Auto-saved ${now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`;
+      }
+    }
+
+    // Collect all form data for submission
+    function collectFormData() {
+      const data = {
+        'Survey Type': 'Leadership',
+        'Submitted At': new Date().toISOString()
+      };
+      
+      // Get all text inputs and textareas
+      document.querySelectorAll('input[type="text"], input[type="number"], textarea, select').forEach(el => {
+        const label = el.closest('.form-group')?.querySelector('.form-label')?.textContent;
+        if (label && el.value) {
+          data[label.substring(0, 50)] = el.value;
+        }
+      });
+      
+      // Get slider values
+      document.querySelectorAll('input[type="range"]').forEach(el => {
+        const label = el.closest('.form-group')?.querySelector('.form-label')?.textContent;
+        if (label) {
+          data[label.substring(0, 50)] = el.value;
+        }
+      });
+      
+      // Get selected radios
+      document.querySelectorAll('.radio-option.selected').forEach(el => {
+        const label = el.closest('.form-group')?.querySelector('.form-label')?.textContent;
+        const value = el.querySelector('.radio-label')?.textContent;
+        if (label && value) {
+          data[label.substring(0, 50)] = value;
+        }
+      });
+      
+      // Get selected pills
+      const selectedPills = [];
+      document.querySelectorAll('.pill.selected').forEach(el => {
+        selectedPills.push(el.textContent);
+      });
+      if (selectedPills.length > 0) {
+        data['Selected Options'] = selectedPills.join(', ');
+      }
+      
+      return data;
+    }
+
+    // Submit to Airtable via Netlify function
+    async function submitToAirtable() {
+      const submitBtn = document.getElementById('nextBtn');
+      submitBtn.textContent = 'Submitting...';
+      submitBtn.disabled = true;
+      
+      const data = collectFormData();
+      
+      try {
+        const response = await fetch('/.netlify/functions/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        
+        if (response.ok) {
+          localStorage.removeItem(STORAGE_KEY);
+          currentSection++;
+          updateUI();
+        } else {
+          throw new Error('Submission failed');
+        }
+      } catch (error) {
+        console.error('Submit error:', error);
+        alert('There was an issue submitting. Your responses have been saved locally. Please try again or contact leadership.');
+        submitBtn.textContent = 'Try Again';
+        submitBtn.disabled = false;
+      }
+    }
+
+    function updateUI() {
+      document.querySelectorAll('.section').forEach((s, i) => s.classList.toggle('active', i === currentSection));
+      document.querySelectorAll('.tab-btn').forEach((btn, i) => btn.classList.toggle('active', i === currentSection));
+      
+      document.getElementById('backBtn').style.visibility = currentSection === 0 ? 'hidden' : 'visible';
+      
+      const nextBtn = document.getElementById('nextBtn');
+      if (currentSection === totalSections - 2) {
+        nextBtn.textContent = 'Submit';
+        nextBtn.disabled = false;
+      } else if (currentSection === totalSections - 1) {
+        document.querySelector('.footer-nav').style.display = 'none';
+      } else {
+        nextBtn.textContent = currentSection === 0 ? 'Begin' : 'Continue';
+        nextBtn.disabled = false;
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (currentSection > 0 && currentSection < totalSections - 1) {
+        saveProgress();
+      }
+    }
+
+    function goToSection(i) { currentSection = i; updateUI(); }
+    
+    function nextSection() { 
+      if (currentSection === totalSections - 2) {
+        submitToAirtable();
+      } else if (currentSection < totalSections - 1) { 
+        currentSection++; 
+        updateUI(); 
+      } 
+    }
+    
+    function prevSection() { if (currentSection > 0) { currentSection--; updateUI(); } }
+
+    function selectRadio(el) {
+      el.closest('.radio-group').querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      saveProgress();
+    }
+
+    function togglePill(el) { 
+      el.classList.toggle('selected'); 
+      saveProgress();
+    }
+
+    // Auto-save on input changes
+    document.addEventListener('input', (e) => {
+      if (e.target.matches('input, textarea, select')) {
+        saveProgress();
+      }
+    });
+
+    // Initialize
+    loadProgress();
+    updateUI();
+  </script>
+
+</body>
+</html>
