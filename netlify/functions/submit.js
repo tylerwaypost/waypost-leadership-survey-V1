@@ -1,6 +1,6 @@
 const AIRTABLE_API_KEY = 'patXqzovHQO0LuufS.d73a9fc9f8fc8b40ecd67bd8583d0dd0b19ab757fbedec7799ab776f19dce4ae';
-const AIRTABLE_BASE_ID = 'appxEvkeL8eU4zX0q';
-const AIRTABLE_TABLE_NAME = 'Staff Responses';
+const AIRTABLE_BASE_ID = 'apphCeBBITTuh5pb5';
+const AIRTABLE_TABLE_NAME = 'Leadership Responses';
 
 exports.handler = async (event, context) => {
   // Only allow POST
